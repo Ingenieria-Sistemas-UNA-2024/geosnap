@@ -6,6 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 type RootStackParamList = {
   Registro: undefined;
+  BottomNavigation: undefined;
 };
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Registro'>;
@@ -20,6 +21,10 @@ export default function Login({ navigation }: LoginProps): JSX.Element {
 
     const handleSignUpPress = () => {
         navigation.navigate('Registro');
+    };
+
+    const handleSignInPress = () => {
+        navigation.navigate('Navigation');
     };
 
     return (
@@ -60,7 +65,7 @@ export default function Login({ navigation }: LoginProps): JSX.Element {
                     />
                 </View>
                 <View style={styles.buttonView}>
-                    <Pressable style={styles.button} onPress={() => Alert.alert("El Scrum Máster es gay")}>
+                    <Pressable style={styles.button} onPress={handleSignInPress}>
                         <Text style={styles.buttonText}>Iniciar Sesión</Text>
                     </Pressable>
                 </View>
@@ -74,7 +79,6 @@ export default function Login({ navigation }: LoginProps): JSX.Element {
 }
 
 const styles = StyleSheet.create({
-    
   container: {
     flex: 1,
     backgroundColor: '#161B22',
