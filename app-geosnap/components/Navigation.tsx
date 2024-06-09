@@ -1,8 +1,7 @@
 // Main.js
-import React from 'react';
+import React, {useState,useEffect,useRef} from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Home, Plus, User } from 'lucide-react-native';
-
 import { NavigationProp } from '@react-navigation/native';
 
 type NavigationProps = {
