@@ -49,7 +49,7 @@ export default function Login({ navigation }: LoginProps): JSX.Element {
                 <View style={styles.inputView}>
                     <View style={styles.passwordRow}>
                         <Text style={styles.passwordText}>Contraseña</Text>
-                        <Pressable onPress={() => Alert.alert("Forget Password!")}>
+                        <Pressable onPress={() => Alert.alert("Módulo en mantenimiento")}>
                             <Text style={styles.forgetText}>¿Has olvidado la contraseña?</Text>
                         </Pressable>
                     </View>
