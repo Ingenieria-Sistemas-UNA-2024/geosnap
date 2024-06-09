@@ -3,18 +3,44 @@ import React, {useState,useEffect,useRef} from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Home, Plus, User } from 'lucide-react-native';
 import { NavigationProp } from '@react-navigation/native';
-
+import * as ImagePicker from "expo-image-picker";
 type NavigationProps = {
     navigation: NavigationProp<any>;
 };
 
 export default function Navigation({ navigation }: NavigationProps){
+    const [image, setImage] = useState();
+    const uploadImage = async () => {
+        try {
+          await ImagePicker.requestCameraPermissionsAsync();
+          let result = await ImagePicker.launchCameraAsync({
+            cameraType: ImagePicker.CameraType.front,
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 1,
+          });
+          if (!result.canceled) {
+            //Save
+            await saveImage(result.assets[0].uri);
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      };
+    
+      const saveImage = async (image: any) => {
+        try {
+          setImage(image);
+        } catch (e) {
+          console.log(e);
+        }
+      };
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Home')}>
                 <Home size={24} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.cameraButton} onPress={() => navigation.navigate('Camera')}>
+            <TouchableOpacity style={styles.cameraButton} onPress={uploadImage}>
                 <Plus size={40} color="white" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Profile')}>
