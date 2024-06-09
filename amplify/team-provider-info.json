@@ -10,6 +10,11 @@
       "StackName": "amplify-geosnap-dev-44836",
       "StackId": "arn:aws:cloudformation:us-east-1:381491967795:stack/amplify-geosnap-dev-44836/0c2d2d30-2693-11ef-9003-0afff87fd119",
       "AmplifyAppId": "d17h6maigxtolx"
+    },
+    "categories": {
+      "auth": {
+        "geosnap": {}
+      }
     }
   }
 }
