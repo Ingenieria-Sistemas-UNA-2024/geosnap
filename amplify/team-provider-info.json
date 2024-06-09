@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-geosnap-dev-44836-authRole",
+      "UnauthRoleArn": "arn:aws:iam::381491967795:role/amplify-geosnap-dev-44836-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::381491967795:role/amplify-geosnap-dev-44836-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-geosnap-dev-44836-deployment",
+      "UnauthRoleName": "amplify-geosnap-dev-44836-unauthRole",
+      "StackName": "amplify-geosnap-dev-44836",
+      "StackId": "arn:aws:cloudformation:us-east-1:381491967795:stack/amplify-geosnap-dev-44836/0c2d2d30-2693-11ef-9003-0afff87fd119",
+      "AmplifyAppId": "d17h6maigxtolx"
+    },
+    "categories": {
+      "auth": {
+        "geosnap": {}
+      }
+    }
+  }
+}

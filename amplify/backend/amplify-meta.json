@@ -1,0 +1,62 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-geosnap-dev-44836-authRole",
+      "UnauthRoleArn": "arn:aws:iam::381491967795:role/amplify-geosnap-dev-44836-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::381491967795:role/amplify-geosnap-dev-44836-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-geosnap-dev-44836-deployment",
+      "UnauthRoleName": "amplify-geosnap-dev-44836-unauthRole",
+      "StackName": "amplify-geosnap-dev-44836",
+      "StackId": "arn:aws:cloudformation:us-east-1:381491967795:stack/amplify-geosnap-dev-44836/0c2d2d30-2693-11ef-9003-0afff87fd119",
+      "AmplifyAppId": "d17h6maigxtolx"
+    }
+  },
+  "auth": {
+    "geosnap": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": [
+            "REQUIRES_LOWERCASE",
+            "REQUIRES_NUMBERS",
+            "REQUIRES_UPPERCASE"
+          ]
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-geosnap-dev-44836-deployment/amplify-cfn-templates/auth/geosnap-cloudformation-template.json",
+        "logicalId": "authgeosnap"
+      },
+      "lastPushTimeStamp": "2024-06-09T20:35:25.392Z",
+      "output": {
+        "UserPoolId": "us-east-1_3Xp7NRSyl",
+        "AppClientIDWeb": "7fplv92ei2mujppdr4kbgudoip",
+        "AppClientID": "5jmdilec51upmq7re0t8qr220u",
+        "IdentityPoolId": "us-east-1:dcd49acf-40ed-437c-9ee1-9a7e308eabf4",
+        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:381491967795:userpool/us-east-1_3Xp7NRSyl",
+        "IdentityPoolName": "testAuthIdentityPool__dev",
+        "UserPoolName": "geosnap"
+      },
+      "lastPushDirHash": "8NtGf/398+VOgxQqt8g9TD04ix4="
+    }
+  }
+}
