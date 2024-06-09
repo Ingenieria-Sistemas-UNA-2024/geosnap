@@ -4,15 +4,18 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Home, Plus, User } from 'lucide-react-native';
 import { NavigationProp } from '@react-navigation/native';
 import * as ImagePicker from "expo-image-picker";
+import * as Location from 'expo-location';
 type NavigationProps = {
     navigation: NavigationProp<any>;
 };
 
 export default function Navigation({ navigation }: NavigationProps){
     const [image, setImage] = useState();
+    const [location, setLocation] = useState<Location.LocationObject | null>(null);
     const uploadImage = async () => {
         try {
           await ImagePicker.requestCameraPermissionsAsync();
+          await getCurrentLocation();
           let result = await ImagePicker.launchCameraAsync({
             cameraType: ImagePicker.CameraType.front,
             allowsEditing: true,
@@ -21,16 +24,30 @@ export default function Navigation({ navigation }: NavigationProps){
           });
           if (!result.canceled) {
             //Save
-            await saveImage(result.assets[0].uri);
+            await saveImage(result.assets[0].uri, location);
           }
         } catch (e) {
           console.log(e);
         }
       };
-    
-      const saveImage = async (image: any) => {
+      const getCurrentLocation = async () => {
+        try {
+          const { status } = await Location.requestForegroundPermissionsAsync();
+          if (status !== 'granted') {
+            console.log('Location permission denied');
+            return;
+          }
+      
+          const currentLocation = await Location.getCurrentPositionAsync({});
+          setLocation(currentLocation);
+        } catch (error) {
+          console.log('Error getting location:', error);
+        }
+      };
+      const saveImage = async (image: any, locationData: Location.LocationObject | null) => {
         try {
           setImage(image);
+          console.log("Location data:",locationData);
         } catch (e) {
           console.log(e);
         }
