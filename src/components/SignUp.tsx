@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text, KeyboardAvoidingView, TouchableOpacity, ScrollView } from "react-native";
-import { useNavigation } from '@react-navigation/native';
 import Input from "./Input";
-import signUpUser from "../libs/signUpUser";
+import saveUser from "../libs/saveUser";
+import React, { useState } from "react";
 import { theme } from "../utils/theme";
 import { User } from "../types/types";
+import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, View, Text, KeyboardAvoidingView, TouchableOpacity, ScrollView } from "react-native";
 
 const initialUser: User = {
   name: "",
@@ -24,7 +24,7 @@ const SignUp = () => {
     setUser({ ...user, [field]: value });
   };
 
-  const handleSignUpUser = async (user: User) => {
+  const handleSignUpUser = async(user: User) => {
     for (const [key, value] of Object.entries(user)) {
       if (value.trim() === "") {
         setErrortext(`El campo ${key} es obligatorio y no puede estar vacío.`);
@@ -32,10 +32,10 @@ const SignUp = () => {
       }
     }
     try {
-      await signUpUser(user);
-      navigation.navigate('Inicio de Sesión');
+      saveUser(user)
+      navigation.navigate('Inicio de Sesión')
     } catch (error) {
-      setErrortext(`Surgió un error a la hora de registrarse, inténtelo de nuevo`);
+      setErrortext(`Ocurrio un error a la hora de registrase intentelo de nuevo`);
     }
   };
 
