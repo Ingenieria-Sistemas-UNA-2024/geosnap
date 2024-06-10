@@ -40,6 +40,7 @@ const Login: React.FC = () => {
           onChangeText={(value) => {
             email.current = value
           }}
+          keyboardType="email-address"
           autoCapitalize="none"
         />
         <Input
@@ -50,7 +51,7 @@ const Login: React.FC = () => {
           secureTextEntry
           autoCapitalize="none"
         />
-        <View style={{ alignItems: "center" }}>
+        <View style={styles.buttonView}>
           <Pressable style={styles.button} onPress={() => handleSignInPress()}>
             <Text style={styles.buttonText}>Iniciar Sesión</Text>
           </Pressable>
@@ -60,13 +61,6 @@ const Login: React.FC = () => {
           <Text style={styles.signup} onPress={() => navigation.navigate("Registro")}>
             {" "}
             Registrarse
-          </Text>
-        </Text>
-        <Text style={styles.footerText}>
-          ¿Has olvidado la contraseña?
-          <Text style={styles.signup} onPress={() => Alert.alert("Módulo en mantenimiento")}>
-            {" "}
-            Recuperar
           </Text>
         </Text>
       </View>
@@ -80,6 +74,11 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.backgroundSecundary,
     justifyContent: "center",
     alignItems: "center",
+  },
+  buttonView: {
+    width: "100%",
+    paddingHorizontal: 40,
+    marginTop: 20
   },
   logoContainer: {
     alignItems: "center",
