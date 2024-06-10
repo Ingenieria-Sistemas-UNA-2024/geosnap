@@ -38,7 +38,7 @@ const Home = () => {
     <PostCard username={item.userName ?? ""} imageUri={item.photoURL ?? ""} />
   );
 
-  const handleEndReached = useCallback(async () => {
+  const handleEndReached = async () => {
     if (!loading && hasMore && lastkey) {
       setLoading(true); // Indicar que se está cargando
       const { items, LastEvaluatedKey } = await getPhotos(lastkey);
@@ -46,7 +46,7 @@ const Home = () => {
       dispatch(setLastKey(LastEvaluatedKey));
       setLoading(false); // Indicar que la carga ha terminado
     }
-  }, [loading, hasMore, lastkey]);
+  }
 
   return (
     <View style={styles.container}>

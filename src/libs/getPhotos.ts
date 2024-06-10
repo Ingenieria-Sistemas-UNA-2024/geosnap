@@ -10,12 +10,12 @@ const getPhotos = async (LastEvaluatedKey?: string): Promise<{ items: Photo[]; L
       return Promise.reject("Credenciales inválidas");
     }
 
-    const data: { Items: Photo[]; LastEvaluatedKey: string } = await res.json();
-    console.log("items", data.Items)
-    if (data.Items.length === 0) {
+    const data: { items: Photo[]; LastEvaluatedKey: string } = await res.json();
+    console.log("items", data.items)
+    if (data.items.length === 0) {
       return Promise.reject("Datos inválidos");
     }
-    return {items:data.Items,LastEvaluatedKey:data.LastEvaluatedKey};
+    return {items:data.items,LastEvaluatedKey:data.LastEvaluatedKey};
   } catch (error: any) {
     return Promise.reject("Ocurrió un error al obtener las imágenes");
   }
