@@ -3,6 +3,9 @@ import signInUser from "../libs/signInUser"
 import React, { useRef } from "react"
 import { theme } from "../utils/theme"
 import { Camera } from "lucide-react-native"
+import { setUser } from "../redux/userSlice"
+import { useAppDispatch } from "../redux/hooks"
+import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Alert, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native"
 
@@ -17,20 +20,23 @@ interface LoginProps {
   navigation: LoginScreenNavigationProp
 }
 
-export default function Login({ navigation }: LoginProps): JSX.Element {
+const Login: React.FC = () => {
   const email = useRef<string>("")
   const password = useRef<string>("")
+  const navigation = useNavigation();
+  const dispatch = useAppDispatch()
 
-  const handleSignInPress = () => {
+  const handleSignInPress = async() => {
     if (email.current === "" || password.current === "") {
       Alert.alert("Todos los campos son obligatorios")
       return
     }
     try {
-      signInUser(email.current, password.current)
+      const user = await signInUser(email.current, password.current)
+      dispatch(setUser(user))
       navigation.navigate("TabNavigator")
-    } catch (error) {
-      Alert.alert("Ocurrio un error al iniciar sesión")
+    } catch (error: any) {
+      Alert.alert(error)
     }
   }
 
@@ -57,7 +63,7 @@ export default function Login({ navigation }: LoginProps): JSX.Element {
           autoCapitalize="none"
         />
         <View style={{ alignItems: "center" }}>
-          <Pressable style={styles.button} onPress={() => handleSignInPress}>
+          <Pressable style={styles.button} onPress={() => handleSignInPress()}>
             <Text style={styles.buttonText}>Iniciar Sesión</Text>
           </Pressable>
         </View>
@@ -153,3 +159,5 @@ const styles = StyleSheet.create({
     fontSize: theme.fontSizes.button,
   },
 })
+
+export default Login
