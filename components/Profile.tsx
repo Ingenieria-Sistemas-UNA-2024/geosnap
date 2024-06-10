@@ -1,12 +1,19 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const Profile = () => {
+  const navigation = useNavigation();
+
   const name = "James";
   const firstLastName = "Rivera";
   const secondLastName = "Núñez";
   const email = "james.rivera.nunez@est.una.ac.cr";
   const phone = "8707-7994";
+
+  const handleLogout = () => {
+    navigation.navigate('Inicio de Sesión');
+  };
 
   return (
     <View style={styles.container}>
@@ -23,6 +30,9 @@ const Profile = () => {
         <Text style={styles.label}>Teléfono:</Text>
         <Text style={styles.value}>{phone}</Text>
       </View>
+      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <Text style={styles.logoutButtonText}>Cerrar sesión</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -34,7 +44,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 20,
     paddingTop: 100,
-    paddingBottom: 70, // To avoid overlapping with footer
+    paddingBottom: 70,
   },
   title: {
     fontSize: 24,
@@ -52,6 +62,18 @@ const styles = StyleSheet.create({
   },
   value: {
     marginTop: 5,
+  },
+  logoutButton: {
+    marginTop: 70,
+    backgroundColor: '#422171',
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    borderRadius: 7,
+  },
+  logoutButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 
