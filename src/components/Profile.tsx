@@ -1,15 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { User } from '../types/types';
 import { useNavigation } from '@react-navigation/native';
+import { useAppSelector } from '../redux/hooks';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 const Profile = () => {
+  const user: User = useAppSelector((state)=>state.user.user)
   const navigation = useNavigation();
-
-  const name = "James";
-  const firstLastName = "Rivera";
-  const secondLastName = "Núñez";
-  const email = "james.rivera.nunez@est.una.ac.cr";
-  const phone = "8707-7994";
 
   const handleLogout = () => {
     navigation.navigate('Inicio de Sesión');
@@ -20,15 +17,15 @@ const Profile = () => {
       <Text style={styles.title}>GeoSnap</Text>
       <View style={styles.userInfo}>
         <Text style={styles.label}>Nombre:</Text>
-        <Text style={styles.value}>{name}</Text>
+        <Text style={styles.value}>{user.name}</Text>
         <Text style={styles.label}>Primer apellido:</Text>
-        <Text style={styles.value}>{firstLastName}</Text>
+        <Text style={styles.value}>{user.firstName}</Text>
         <Text style={styles.label}>Segundo apellido:</Text>
-        <Text style={styles.value}>{secondLastName}</Text>
+        <Text style={styles.value}>{user.lastName}</Text>
         <Text style={styles.label}>Correo electrónico:</Text>
-        <Text style={styles.value}>{email}</Text>
+        <Text style={styles.value}>{user.email}</Text>
         <Text style={styles.label}>Teléfono:</Text>
-        <Text style={styles.value}>{phone}</Text>
+        <Text style={styles.value}>{user.phone}</Text>
       </View>
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
         <Text style={styles.logoutButtonText}>Cerrar sesión</Text>
