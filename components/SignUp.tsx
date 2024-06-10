@@ -9,16 +9,22 @@ import {
   ScrollView,
 } from 'react-native';
 
-export default function SignUp () {
+import { NavigationProp } from '@react-navigation/native';
+
+type SignUpProps = {
+  navigation: NavigationProp<any>;
+};
+
+export default function SignUp({ navigation }: SignUpProps) {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
-  const [userAge, setUserAge] = useState('');
-  const [userAddress, setUserAddress] = useState('');
+  const [userLastName, setUserLastName] = useState('');
+  const [userPhoneNumber, setUserPhoneNumber] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [errortext, setErrortext] = useState('');
 
   return (
-    <View style={{flex: 1, backgroundColor: '#161B22'}}>
+    <View style={{ flex: 1, backgroundColor: '#161B22' }}>
       <ScrollView
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
@@ -42,67 +48,57 @@ export default function SignUp () {
               style={styles.inputStyle}
               onChangeText={(UserEmail) => setUserEmail(UserEmail)}
               placeholderTextColor="#8b9cb5"
-              keyboardType="email-address"
             />
           </View>
           <View style={styles.SectionStyle}>
             <Text style={styles.inputDescription}>Segundo Apellido</Text>
             <TextInput
               style={styles.inputStyle}
-              onChangeText={(UserPassword) =>
-                setUserPassword(UserPassword)
-              }
+              onChangeText={(UserLastName) => setUserLastName(UserLastName)}
               placeholderTextColor="#8b9cb5"
-              secureTextEntry={true}
             />
           </View>
           <View style={styles.SectionStyle}>
-            <Text style={styles.inputDescription}>Correo Electronico</Text>
+            <Text style={styles.inputDescription}>Correo Electrónico</Text>
             <TextInput
               style={styles.inputStyle}
-              onChangeText={(UserAge) => setUserAge(UserAge)}
+              onChangeText={(UserEmailAddress) => setUserEmail(UserEmailAddress)}
               placeholderTextColor="#8b9cb5"
-              keyboardType="numeric"
+              keyboardType="email-address"
             />
           </View>
           <View style={styles.SectionStyle}>
             <Text style={styles.inputDescription}>Teléfono</Text>
             <TextInput
               style={styles.inputStyle}
-              onChangeText={(UserAddress) =>
-                setUserAddress(UserAddress)
-              }
+              onChangeText={(UserPhoneNumber) => setUserPhoneNumber(UserPhoneNumber)}
               placeholderTextColor="#8b9cb5"
-              autoCapitalize="sentences"
+              keyboardType="phone-pad"
             />
           </View>
           <View style={styles.SectionStyle}>
             <Text style={styles.inputDescription}>Contraseña</Text>
             <TextInput
               style={styles.inputStyle}
-              onChangeText={(UserAddress) =>
-                setUserAddress(UserAddress)
-              }
+              onChangeText={(UserPassword) => setUserPassword(UserPassword)}
               placeholderTextColor="#8b9cb5"
-              autoCapitalize="sentences"
+              secureTextEntry={true}
             />
           </View>
           {errortext != '' ? (
-            <Text style={styles.errorTextStyle}>
-              {errortext}
-            </Text>
+            <Text style={styles.errorTextStyle}>{errortext}</Text>
           ) : null}
           <TouchableOpacity
             style={styles.buttonStyle}
             activeOpacity={0.5}
-            onPress={() => {}}>
+            onPress={() => navigation.navigate('Inicio de Sesión')}>
             <Text style={styles.buttonTextStyle}>Registrarse</Text>
           </TouchableOpacity>
         </KeyboardAvoidingView>
       </ScrollView>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   title: {

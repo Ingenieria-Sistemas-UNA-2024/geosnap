@@ -23,10 +23,6 @@ export default function Login({ navigation }: LoginProps): JSX.Element {
         navigation.navigate('Registro');
     };
 
-    const handleSignInPress = () => {
-        navigation.navigate('TabNavigator');
-    };
-
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.logoContainer}>
@@ -65,7 +61,7 @@ export default function Login({ navigation }: LoginProps): JSX.Element {
                     />
                 </View>
                 <View style={styles.buttonView}>
-                    <Pressable style={styles.button} onPress={handleSignInPress}>
+                    <Pressable style={styles.button} onPress={() => navigation.navigate('TabNavigator')}>
                         <Text style={styles.buttonText}>Iniciar Sesión</Text>
                     </Pressable>
                 </View>
