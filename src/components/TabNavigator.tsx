@@ -55,7 +55,7 @@ export default function TabNavigator() {
         console.error("Faltan cordenadas")
         throw new Error("Faltan cordenadas")
       }
-
+      
       const photoBase64 = await getBase64FromUrl(image);
 
       const photo: Photo = {
