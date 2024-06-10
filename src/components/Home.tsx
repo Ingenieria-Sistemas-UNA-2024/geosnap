@@ -1,59 +1,64 @@
-import React, { useState, useEffect } from "react";
-import { View, FlatList, StyleSheet } from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
+import { View, FlatList, StyleSheet, ActivityIndicator } from "react-native";
 import PostCard from "./PostCard";
 import getPhotos from "../libs/getPhotos";
 import { Photo } from "../types/types";
-
-interface Card {
-  id: number;
-  imageUri: string;
-  username: string;
-}
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
+import { setPhotos, addPhotos, setLastKey } from "../redux/photoSlice";
+import { Phone } from "lucide-react-native";
 
 const Home = () => {
-  const [cards, setCards] = useState<Card[]>([]);
-  const [page, setPage] = useState(1);
-
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const photos = useAppSelector((state) => state.photo.photos);
+  const lastkey = useAppSelector((state) => state.photo.lastkey);
+  const dispatch = useAppDispatch();
+  console.log("array", photos)
   useEffect(() => {
-    fetchCards();
+    const loadPhotosAndCards = async () => {
+      await fetchPhotos();
+    };
+    loadPhotosAndCards();
   }, []);
 
-  const fetchCards = async () => {
+  const fetchPhotos = async () => {
     try {
-      const photos: Photo[] = await getPhotos();
-
-      setCards((prevCards) => [
-        ...prevCards,
-        ...photos.map((photo) => ({
-          id: parseInt(photo.photoID || "0", 10),
-          imageUri: photo.photoURL || "",
-          username: `user_${photo.userID || ""}`,
-        })),
-      ]);
-      setPage((prevPage) => prevPage + 1);
+      setLoading(true); // Indicar que se está cargando
+      const { items, LastEvaluatedKey } = await getPhotos();
+      dispatch(setPhotos(items as Photo[]));
+      dispatch(setLastKey(LastEvaluatedKey));
+      setLoading(false); // Indicar que la carga ha terminado
     } catch (error) {
-      console.error("Error fetching cards:", error);
+      console.error("Error fetching photos:", error);
+      setLoading(false); // Asegurar que la carga se marque como completa en caso de error
     }
   };
 
-  const renderCard = ({
-    item,
-  }: {
-    item: Card;
-  }) => <PostCard username={item.username} imageUri={item.imageUri} />;
+  const renderCard = ({ item }: { item: Photo }) => (
+    <PostCard username={item.userName ?? ""} imageUri={item.photoURL ?? ""} />
+  );
 
-  const handleEndReached = () => {
-    fetchCards();
-  };
+  const handleEndReached = useCallback(async () => {
+    if (!loading && hasMore && lastkey) {
+      setLoading(true); // Indicar que se está cargando
+      const { items, LastEvaluatedKey } = await getPhotos(lastkey);
+      dispatch(addPhotos(items));
+      dispatch(setLastKey(LastEvaluatedKey));
+      setLoading(false); // Indicar que la carga ha terminado
+    }
+  }, [loading, hasMore, lastkey]);
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={cards}
+        data={photos}
         renderItem={renderCard}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item, index) => index.toString()} // Usa el índice como clave
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.5}
+        ListFooterComponent={
+          loading ? <ActivityIndicator size="large" /> : null
+        }
       />
     </View>
   );
