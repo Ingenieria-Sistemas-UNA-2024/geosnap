@@ -7,7 +7,8 @@ export interface Photo {
   photoID?: string
   latitude?: string
   photoURL?: string
-  photoData: string;
+  photoData: string
+  userName: string
 }
 export interface User {
   password: string

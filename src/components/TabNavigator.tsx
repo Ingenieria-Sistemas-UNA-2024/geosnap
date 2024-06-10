@@ -63,6 +63,8 @@ export default function TabNavigator() {
         latitude: locationData.latitude.toString(),
         longitude: locationData.longitude.toString(),
         userID: user.userID,
+        userName: `${user.name} ${user.firstLastName} ${user.secondLastName}`,
+        likes: 0,
       };
       savePhoto(photo)
     } catch (e) {
