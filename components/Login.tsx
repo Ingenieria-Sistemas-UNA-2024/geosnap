@@ -24,7 +24,7 @@ export default function Login({ navigation }: LoginProps): JSX.Element {
     };
 
     const handleSignInPress = () => {
-        navigation.navigate('Navigation');
+        navigation.navigate('TabNavigator');
     };
 
     return (
