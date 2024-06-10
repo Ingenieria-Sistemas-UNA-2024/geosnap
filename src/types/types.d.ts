@@ -9,12 +9,12 @@ export interface Photo {
   photoURL: string;
 }
 export interface User {
-  password: string;
-  lastName: string;
-  userID?: string;
-  email: string;
-  phone: string;
-  firstName: string;
-  name: string;
-  plus?: boolean;
+  password: string
+  secondLastName: string
+  userID?: string
+  email: string
+  phone: string
+  firstLastName: string
+  name: string
+  plus?: boolean
 }
