@@ -7,10 +7,14 @@ import Home from './Home';
 import Profile from './Profile';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
+import { Photo, User } from '../types/types';
+import { useAppSelector } from '../redux/hooks';
+import savePhoto from '../libs/savePhoto';
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
+  const user: User = useAppSelector((state)=>state.user.user)
   const [image, setImage] = useState();
 
   const uploadImage = async () => {
@@ -29,12 +33,40 @@ export default function TabNavigator() {
     }
   };
 
+  const convertFileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+  
+      reader.onload = () => {
+        const result = reader.result as string;
+        resolve(result);
+      };
+  
+      reader.onerror = (error) => {
+        reject(error);
+      };
+  
+      reader.readAsDataURL(file);
+    });
+  };
+
   const saveImage = async (image: any) => {
     try {
       const locationData = await getCurrentLocation();
       setImage(image);
-      console.log('Image:', image);
-      console.log('Location data:', locationData);
+      if(!locationData){
+        throw new Error("Faltan cordenadas")
+      }
+
+      const photoData = await convertFileToBase64(image);
+
+      const photo: Photo = {
+        photoData,
+        latitude: locationData.latitude.toString(),
+        longitude: locationData.longitude.toString(),
+        userID: user.userID,
+      };
+      savePhoto(photo)
     } catch (e) {
       console.log(e);
     }
