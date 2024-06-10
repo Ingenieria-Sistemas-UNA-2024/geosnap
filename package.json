@@ -13,8 +13,10 @@
     "expo-camera": "~15.0.10",
     "expo-media-library": "~16.0.3",
     "expo-status-bar": "~1.12.1",
+    "lucide-react-native": "^0.390.0",
     "react": "18.2.0",
-    "react-native": "0.74.2"
+    "react-native": "0.74.2",
+    "twrnc": "^4.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
