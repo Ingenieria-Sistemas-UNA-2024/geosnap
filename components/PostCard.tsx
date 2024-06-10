@@ -9,9 +9,11 @@ interface PostCardProps {
 
 export default function PostCard({ username, imageUri }: PostCardProps) {
   const [likes, setLikes] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
 
   const handleLike = () => {
-    setLikes(likes + 1);
+    setLikes(isLiked ? likes - 1 : likes + 1);
+    setIsLiked(!isLiked);
   };
 
   return (
@@ -23,7 +25,7 @@ export default function PostCard({ username, imageUri }: PostCardProps) {
       <View style={styles.footer}>
         <View style={styles.likeButton}>
           <TouchableOpacity onPress={handleLike}>
-            <Heart size={30} color="black" />
+            <Heart size={30} color={isLiked ? 'red' : 'black'} />
           </TouchableOpacity>
           <Text style={styles.likeText}>{likes} Me gusta</Text>
         </View>

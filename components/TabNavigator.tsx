@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: 'relative',
+    backgroundColor: '#7f7f7f',
   },
   cameraButton: {
     alignItems: 'center',
