@@ -1,46 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
-import PostCard from './PostCard';
+import React, { useState, useEffect, useCallback } from "react";
+import { View, FlatList, StyleSheet, ActivityIndicator } from "react-native";
+import PostCard from "./PostCard";
+import getPhotos from "../libs/getPhotos";
+import { Photo } from "../types/types";
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
+import { setPhotos, addPhotos, setLastKey } from "../redux/photoSlice";
+import { Phone } from "lucide-react-native";
 
 const Home = () => {
-  const [cards, setCards] = useState<{ id: number; imageUri: string; username: string; }[]>([]);
-  const [page, setPage] = useState(1);
-
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const photos = useAppSelector((state) => state.photo.photos);
+  const lastkey = useAppSelector((state) => state.photo.lastkey);
+  const dispatch = useAppDispatch();
+  console.log("array", photos)
   useEffect(() => {
-    fetchCards();
+    const loadPhotosAndCards = async () => {
+      await fetchPhotos();
+    };
+    loadPhotosAndCards();
   }, []);
 
-  const fetchCards = async () => {
+  const fetchPhotos = async () => {
     try {
-      const response = await fetch(`https://picsum.photos/v2/list?page=${page}&limit=10`);
-      const data = await response.json();
-
-    setCards((prevCards: { id: number; imageUri: string; username: string; }[]) => [...prevCards, ...data.map((item: { id: string; download_url: string; }) => ({ id: parseInt(item.id), imageUri: item.download_url, username: `user_${item.id}` }))]);
-      setPage((prevPage) => prevPage + 1);
+      setLoading(true); // Indicar que se está cargando
+      const { items, LastEvaluatedKey } = await getPhotos();
+      dispatch(setPhotos(items as Photo[]));
+      dispatch(setLastKey(LastEvaluatedKey));
+      setLoading(false); // Indicar que la carga ha terminado
     } catch (error) {
-      console.error('Error fetching cards:', error);
+      console.error("Error fetching photos:", error);
+      setLoading(false); // Asegurar que la carga se marque como completa en caso de error
     }
   };
 
-  const renderCard = ({ item }: { item: { id: number; imageUri: string; username: string; } }) => (
-    <PostCard
-      username={item.username}
-      imageUri={item.imageUri}
-    />
+  const renderCard = ({ item }: { item: Photo }) => (
+    <PostCard username={item.userName ?? ""} imageUri={item.photoURL ?? ""} />
   );
 
-  const handleEndReached = () => {
-    fetchCards();
-  };
+  const handleEndReached = async () => {
+    if (!loading && hasMore && lastkey) {
+      setLoading(true); // Indicar que se está cargando
+      const { items, LastEvaluatedKey } = await getPhotos(lastkey);
+      dispatch(addPhotos(items));
+      dispatch(setLastKey(LastEvaluatedKey));
+      setLoading(false); // Indicar que la carga ha terminado
+    }
+  }
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={cards}
+        data={photos}
         renderItem={renderCard}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item, index) => index.toString()} // Usa el índice como clave
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.5}
+        ListFooterComponent={
+          loading ? <ActivityIndicator size="large" /> : null
+        }
       />
     </View>
   );
@@ -48,7 +66,7 @@ const Home = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#161B22',
+    backgroundColor: "#161B22",
     flex: 1,
     padding: 20,
   },
