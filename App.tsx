@@ -2,11 +2,11 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Login from './components/Login';
-import SignUp from './components/SignUp';
-import Home from './components/Home';
-import Profile from './components/Profile';
-import TabNavigator from './components/TabNavigator';
+import Login from './src/components/Login';
+import SignUp from './src/components/SignUp';
+import Home from './src/components/Home';
+import Profile from './src/components/Profile';
+import TabNavigator from './src/components/TabNavigator';
 const Stack = createStackNavigator();
 
 export default function App() {
