@@ -17,9 +17,8 @@ export default function TabNavigator() {
     try {
       await ImagePicker.requestCameraPermissionsAsync();
       let result = await ImagePicker.launchCameraAsync({
-        cameraType: ImagePicker.CameraType.front,
-        allowsEditing: true,
-        aspect: [1, 1],
+        cameraType: ImagePicker.CameraType.back,
+        allowsEditing: false,
         quality: 1,
       });
       if (!result.canceled) {
@@ -34,6 +33,7 @@ export default function TabNavigator() {
     try {
       const locationData = await getCurrentLocation();
       setImage(image);
+      console.log('Image:', image);
       console.log('Location data:', locationData);
     } catch (e) {
       console.log(e);
@@ -48,8 +48,8 @@ export default function TabNavigator() {
         return null;
       }
 
-      const currentLocation = await Location.getCurrentPositionAsync({});
-      return currentLocation;
+      const { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync({});
+      return { latitude, longitude };
     } catch (error) {
       console.log('Error getting location:', error);
       return null;

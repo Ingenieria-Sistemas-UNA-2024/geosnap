@@ -12,4 +12,4 @@ const signInUser = async(email: string, password: string): Promise<User> => {
   }
 }
 
-export default signInUsergi
+export default signInUser
