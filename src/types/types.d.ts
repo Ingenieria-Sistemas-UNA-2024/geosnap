@@ -7,14 +7,15 @@ export interface Photo {
   photoID?: string
   latitude?: string
   photoURL?: string
+  photoData: string;
 }
 export interface User {
   password: string
-  lastName: string
+  secondLastName: string
   userID?: string
   email: string
   phone: string
-  firstName: string
+  firstLastName: string
   name: string
   plus?: boolean
 }

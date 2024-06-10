@@ -19,9 +19,9 @@ const Profile = () => {
         <Text style={styles.label}>Nombre:</Text>
         <Text style={styles.value}>{user.name}</Text>
         <Text style={styles.label}>Primer apellido:</Text>
-        <Text style={styles.value}>{user.firstName}</Text>
+        <Text style={styles.value}>{user.firstLastName}</Text>
         <Text style={styles.label}>Segundo apellido:</Text>
-        <Text style={styles.value}>{user.lastName}</Text>
+        <Text style={styles.value}>{user.secondLastName}</Text>
         <Text style={styles.label}>Correo electrónico:</Text>
         <Text style={styles.value}>{user.email}</Text>
         <Text style={styles.label}>Teléfono:</Text>
