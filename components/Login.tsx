@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
-import { CircleUserRound } from 'lucide-react-native';
+import { Camera  } from 'lucide-react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -23,14 +23,10 @@ export default function Login({ navigation }: LoginProps): JSX.Element {
         navigation.navigate('Registro');
     };
 
-    const handleSignInPress = () => {
-        navigation.navigate('Navigation');
-    };
-
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.logoContainer}>
-                <CircleUserRound color="#848586" size={100} />
+                <Camera  color="#54377f" size={100} />
                 <Text style={styles.title}>Geo-Snap</Text>
             </View>
             <View style={styles.formContainer}>
@@ -49,7 +45,7 @@ export default function Login({ navigation }: LoginProps): JSX.Element {
                 <View style={styles.inputView}>
                     <View style={styles.passwordRow}>
                         <Text style={styles.passwordText}>Contraseña</Text>
-                        <Pressable onPress={() => Alert.alert("Forget Password!")}>
+                        <Pressable onPress={() => Alert.alert("Módulo en mantenimiento")}>
                             <Text style={styles.forgetText}>¿Has olvidado la contraseña?</Text>
                         </Pressable>
                     </View>
@@ -65,7 +61,7 @@ export default function Login({ navigation }: LoginProps): JSX.Element {
                     />
                 </View>
                 <View style={styles.buttonView}>
-                    <Pressable style={styles.button} onPress={handleSignInPress}>
+                    <Pressable style={styles.button} onPress={() => navigation.navigate('TabNavigator')}>
                         <Text style={styles.buttonText}>Iniciar Sesión</Text>
                     </Pressable>
                 </View>
@@ -90,11 +86,12 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   title: {
-    fontSize: 30,
+    fontSize: 35,
     fontWeight: 'bold',
     textTransform: 'uppercase',
     textAlign: 'center',
-    color: '#422171',
+    color: '#54377f',
+    marginTop: 20,
   },
   formContainer: {
     width: '80%',
@@ -134,7 +131,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    backgroundColor: '#422171',
+    backgroundColor: '#54377f',
     height: 55,
     width: '100%',
     borderColor: 'gray',
