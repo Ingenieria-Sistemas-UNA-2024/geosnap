@@ -4,13 +4,14 @@ import React, { useState } from "react";
 import { theme } from "../utils/theme";
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Text, KeyboardAvoidingView, TouchableOpacity, ScrollView } from "react-native";
+import { User } from "../types/types";
 
 const initialUser: User = {
   name: "",
   firstName: "",
   lastName: "",
   email: "",
-  phone: 0,
+  phone: "",
   password: "",
 }
 

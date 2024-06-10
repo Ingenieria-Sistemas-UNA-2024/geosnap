@@ -6,19 +6,7 @@ import { Camera } from "lucide-react-native"
 import { setUser } from "../redux/userSlice"
 import { useAppDispatch } from "../redux/hooks"
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from "@react-navigation/stack"
-import { Alert, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native"
-
-type RootStackParamList = {
-  Registro: undefined
-  BottomNavigation: undefined
-}
-
-type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Registro">
-
-interface LoginProps {
-  navigation: LoginScreenNavigationProp
-}
+import { Alert, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native"
 
 const Login: React.FC = () => {
   const email = useRef<string>("")
