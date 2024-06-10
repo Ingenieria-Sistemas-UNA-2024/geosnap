@@ -2,6 +2,7 @@ import Input from "./Input";
 import signUpUser from "../libs/signUpUser";
 import React, { useState } from "react";
 import { theme } from "../utils/theme";
+import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Text, KeyboardAvoidingView, TouchableOpacity, ScrollView } from "react-native";
 
 const initialUser: User = {
@@ -16,6 +17,7 @@ const initialUser: User = {
 export default function SignUp() {
   const [user, setUser] = useState<User>(initialUser);
   const [errortext, setErrortext] = useState("");
+  const navigation = useNavigation();
 
   const handleInputChange = (field: keyof User, value: string) => {
     setUser({ ...user, [field]: value });
@@ -28,7 +30,12 @@ export default function SignUp() {
         return;
       }
     }
-    signUpUser(user)
+    try {
+      signUpUser(user)
+      navigation.navigate('Inicio de Sesión')
+    } catch (error) {
+      setErrortext(`Surgio un error a la hora de registrase intentelo de nuevo`);
+    }
   }
 
   return (
@@ -46,7 +53,7 @@ export default function SignUp() {
           <Input label="Primer Apellido" onChangeText={(value) => handleInputChange("firstName", value)} autoCapitalize="sentences" />
           <Input label="Segundo Apellido" onChangeText={(value) => handleInputChange("lastName", value)} autoCapitalize="sentences" />
           <Input label="Correo Electronico" onChangeText={(value) => handleInputChange("email", value)} keyboardType="email-address" />
-          <Input label="Teléfono" onChangeText={(value) => handleInputChange("phone", value)} keyboardType="numeric" />
+          <Input label="Teléfono" onChangeText={(value) => handleInputChange("phone", value)} keyboardType="phone-pad" />
           <Input
             label="Contraseña"
             onChangeText={(value) => handleInputChange("password", value)}
