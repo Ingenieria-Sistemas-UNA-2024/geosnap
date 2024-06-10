@@ -4,13 +4,14 @@ import { useNavigation } from '@react-navigation/native';
 import Input from "./Input";
 import signUpUser from "../libs/signUpUser";
 import { theme } from "../utils/theme";
+import { User } from "../types/types";
 
 const initialUser: User = {
   name: "",
   firstName: "",
   lastName: "",
   email: "",
-  phone: 0,
+  phone: "",
   password: "",
 };
 

@@ -1,3 +1,4 @@
+import { User } from "../types/types"
 
 const signInUser = async(email: string, password: string): Promise<User> => {
   try {
