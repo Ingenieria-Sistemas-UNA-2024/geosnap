@@ -8,8 +8,8 @@ import { StyleSheet, View, Text, KeyboardAvoidingView, TouchableOpacity, ScrollV
 
 const initialUser: User = {
   name: "",
-  firstName: "",
-  lastName: "",
+  firstLastName: "",
+  secondLastName: "",
   email: "",
   phone: "",
   password: "",
@@ -51,8 +51,8 @@ const SignUp = () => {
         <Text style={styles.title}>Crear usuario</Text>
         <KeyboardAvoidingView enabled>
           <Input label="Nombre" onChangeText={(value) => handleInputChange("name", value)} autoCapitalize="sentences" />
-          <Input label="Primer Apellido" onChangeText={(value) => handleInputChange("firstName", value)} autoCapitalize="sentences" />
-          <Input label="Segundo Apellido" onChangeText={(value) => handleInputChange("lastName", value)} autoCapitalize="sentences" />
+          <Input label="Primer Apellido" onChangeText={(value) => handleInputChange("firstLastName", value)} autoCapitalize="sentences" />
+          <Input label="Segundo Apellido" onChangeText={(value) => handleInputChange("secondLastName", value)} autoCapitalize="sentences" />
           <Input label="Correo Electrónico" onChangeText={(value) => handleInputChange("email", value)} keyboardType="email-address" />
           <Input label="Teléfono" onChangeText={(value) => handleInputChange("phone", value)} keyboardType="phone-pad" />
           <Input

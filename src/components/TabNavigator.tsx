@@ -35,18 +35,19 @@ export default function TabNavigator() {
 
   const convertFileToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-  
-      reader.onload = () => {
-        const result = reader.result as string;
-        resolve(result);
-      };
-  
-      reader.onerror = (error) => {
-        reject(error);
-      };
-  
-      reader.readAsDataURL(file);
+      if (file && file instanceof File) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = reader.result as string;
+          resolve(result);
+        };
+        reader.onerror = (error) => {
+          reject(error);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        reject(new Error('El objeto proporcionado no es un archivo válido.'));
+      }
     });
   };
 
@@ -54,19 +55,23 @@ export default function TabNavigator() {
     try {
       const locationData = await getCurrentLocation();
       setImage(image);
-      if(!locationData){
-        throw new Error("Faltan cordenadas")
+      if (!locationData) {
+        throw new Error("Faltan cordenadas");
       }
-
-      const photoData = await convertFileToBase64(image);
-
-      const photo: Photo = {
-        photoData,
-        latitude: locationData.latitude.toString(),
-        longitude: locationData.longitude.toString(),
-        userID: user.userID,
-      };
-      savePhoto(photo)
+  
+      if (image instanceof File || image instanceof Blob) {
+        const photoData = await convertFileToBase64(image as File);
+        console.log(photoData);
+        const photo: Photo = {
+          photoData,
+          latitude: locationData.latitude.toString(),
+          longitude: locationData.longitude.toString(),
+          userID: user.userID,
+        };
+        savePhoto(photo);
+      } else {
+        console.error("El objeto proporcionado no es un archivo válido.");
+      }
     } catch (e) {
       console.log(e);
     }
