@@ -33,35 +33,33 @@ export default function TabNavigator() {
     }
   };
 
-  const convertFileToBase64 = (file: File): Promise<string> => {
+  async function getBase64FromUrl(url: string): Promise<string> {
+    const response = await fetch(url);
+    const blob = await response.blob();
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-  
-      reader.onload = () => {
-        const result = reader.result as string;
-        resolve(result);
+      reader.readAsDataURL(blob);
+      reader.onloadend = () => {
+        const base64String = (reader.result as string).split(',')[1];
+        resolve(base64String);
       };
-  
-      reader.onerror = (error) => {
-        reject(error);
-      };
-  
-      reader.readAsDataURL(file);
+      reader.onerror = (error) => reject(error);
     });
-  };
+  }
 
   const saveImage = async (image: any) => {
     try {
       const locationData = await getCurrentLocation();
       setImage(image);
       if(!locationData){
+        console.error("Faltan cordenadas")
         throw new Error("Faltan cordenadas")
       }
 
-      const photoData = await convertFileToBase64(image);
+      const photoBase64 = await getBase64FromUrl(image);
 
       const photo: Photo = {
-        photoData,
+        photoData: photoBase64,
         latitude: locationData.latitude.toString(),
         longitude: locationData.longitude.toString(),
         userID: user.userID,
