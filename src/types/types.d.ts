@@ -1,19 +1,22 @@
 export interface Photo {
-  likes?: number;
-  userID?: string;
-  longitude?: string;
-  uploadTime?: string;
-  photoID?: string;
-  latitude?: string;
-  photoURL?: string;
+  photoData?: string
+  likes?: number
+  userID?: string
+  longitude?: string
+  uploadTime?: string
+  photoID?: string
+  latitude?: string
+  photoURL?: string
+  photoData: string
+  userName: string
 }
 export interface User {
-  password: string;
-  lastName: string;
-  userID?: string;
-  email: string;
-  phone: string;
-  firstName: string;
-  name: string;
-  plus?: boolean;
+  password: string
+  secondLastName: string
+  userID?: string
+  email: string
+  phone: string
+  firstLastName: string
+  name: string
+  plus?: boolean
 }

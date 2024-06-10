@@ -7,10 +7,14 @@ import Home from './Home';
 import Profile from './Profile';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
+import { Photo, User } from '../types/types';
+import { useAppSelector } from '../redux/hooks';
+import savePhoto from '../libs/savePhoto';
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
+  const user: User = useAppSelector((state)=>state.user.user)
   const [image, setImage] = useState();
 
   const uploadImage = async () => {
@@ -29,12 +33,40 @@ export default function TabNavigator() {
     }
   };
 
+  async function getBase64FromUrl(url: string): Promise<string> {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = () => {
+        const base64String = (reader.result as string).split(',')[1];
+        resolve(base64String);
+      };
+      reader.onerror = (error) => reject(error);
+    });
+  }
+
   const saveImage = async (image: any) => {
     try {
       const locationData = await getCurrentLocation();
       setImage(image);
-      console.log('Image:', image);
-      console.log('Location data:', locationData);
+      if(!locationData){
+        console.error("Faltan cordenadas")
+        throw new Error("Faltan cordenadas")
+      }
+      
+      const photoBase64 = await getBase64FromUrl(image);
+
+      const photo: Photo = {
+        photoData: photoBase64,
+        latitude: locationData.latitude.toString(),
+        longitude: locationData.longitude.toString(),
+        userID: user.userID,
+        userName: `${user.name} ${user.firstLastName} ${user.secondLastName}`,
+        likes: 0,
+      };
+      savePhoto(photo)
     } catch (e) {
       console.log(e);
     }
